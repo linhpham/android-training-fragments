@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:orientation="vertical"
+	android:layout_gravity="center"
+	android:layout_height="wrap_content"
+	android:background="@drawable/widget_bg">
+
+	<TextView
+		android:id="@+id/widgetTextview"
+		android:text="Latest stock price.."
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:layout_gravity="center_horizontal|center"
+		android:padding="10dip"
+		android:textColor="@android:color/white" />
+</LinearLayout>

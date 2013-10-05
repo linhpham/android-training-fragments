@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, Main Activity!</string>
+    <string name="app_name">jTribe Training</string>
+    
+    <string-array name="stock_codes">
+	    <item>AMP - AMP</item>
+	    <item>BHP - BHP Billiton</item>
+	    <item>CBA - Commonwealth Bank</item>
+	    <item>CSL - CSL</item>
+	    <item>FGL - Fosters Group</item>
+	    <item>NAB - National Australia Bank</item>
+	    <item>NWS - News Corporation</item>
+	    <item>QAN - Qantas Airways</item>
+	    <item>RIO - Rio Tinto</item>
+	    <item>SUN - Suncorp Group</item>
+	    <item>TLS - Telstra Corporation</item>
+	    <item>WOW - Woolworths</item>
+	</string-array>
+	<string-array name="stock_links">
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/amp.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/bhp.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/cba.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/csl.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/fgl.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/nab.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/nws.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/qan.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/rio.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/sun.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/tls.ax</item>
+	    <item>http://au.m.yahoo.com/w/yfinance/quote/wow.ax</item>
+	</string-array>
+</resources>
