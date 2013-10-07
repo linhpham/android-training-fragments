@@ -9,12 +9,19 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 
 public class StockWebviewFragment extends Fragment {
+	public static final String LOAD_URL = "url";
 	private WebView webview = null;
-
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		webview = (WebView) inflater.inflate(R.layout.stock_webview_layout, container, false);
-		return webview;
+		if (getArguments() != null && getArguments().containsKey(LOAD_URL)) {
+			String url = getArguments().getString(LOAD_URL);
+			if (url != null) {
+				webview.loadUrl(url);
+			}
+		}
+ 		return webview;
 	}
 
 	public void loadUrl(String newUrl) {
