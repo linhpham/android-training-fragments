@@ -7,10 +7,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
+	
+	private Button portfolioBtn;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,8 +33,17 @@ public class MainActivity extends Activity {
 			}
 		}
 		
-		Button portfolioBtn = (Button) findViewById(R.id.portfolioBtn);
+		portfolioBtn = (Button) findViewById(R.id.portfolioBtn);
 		portfolioBtn.setOnClickListener(loadStockListActivity);
+		
+		Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+		portfolioBtn.startAnimation(fadeIn);
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		
 	}
 	
 	private OnClickListener loadStockListActivity = new OnClickListener() {
@@ -38,4 +52,5 @@ public class MainActivity extends Activity {
 			startActivity(i);
 		}
 	};
+	
 }
