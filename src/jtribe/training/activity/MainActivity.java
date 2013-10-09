@@ -28,6 +28,10 @@ public class MainActivity extends Activity {
 	private ImageView imageView;
 	private View mainActivityTextView;
 	
+	private ObjectAnimator portfolioBtnAnimator;
+	private ObjectAnimator mainActivityTextViewAnimator;
+	private ObjectAnimator imageViewAnimator;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,20 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onStart() {
 		super.onStart();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (portfolioBtnAnimator != null) {
+			portfolioBtnAnimator.reverse();
+			imageViewAnimator.reverse();
+			mainActivityTextViewAnimator.reverse();
+			
+			portfolioBtnAnimator = null;
+			imageViewAnimator = null;
+			mainActivityTextViewAnimator = null;
+		}
 		
 	}
 	
@@ -67,9 +85,9 @@ public class MainActivity extends Activity {
 				ArrayList<Animator> animators = new ArrayList<Animator>();
 				AnimatorSet set = new AnimatorSet();
 				
-				ObjectAnimator portfolioBtnAnimator = ObjectAnimator.ofFloat(portfolioBtn, "y", distance);
-				ObjectAnimator mainActivityTextViewAnimator = ObjectAnimator.ofFloat(mainActivityTextView, "y", distance);
-				ObjectAnimator imageViewAnimator = ObjectAnimator.ofFloat(imageView, "y", distance);
+				portfolioBtnAnimator = ObjectAnimator.ofFloat(portfolioBtn, "y", distance);
+				mainActivityTextViewAnimator = ObjectAnimator.ofFloat(mainActivityTextView, "y", distance);
+				imageViewAnimator = ObjectAnimator.ofFloat(imageView, "y", distance);
 				
 				animators.add(portfolioBtnAnimator);
 				animators.add(mainActivityTextViewAnimator);
