@@ -50,6 +50,8 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			Intent i = new Intent(MainActivity.this, StockListActivity.class);
 			startActivity(i);
+			// important to call this after startActivity
+			overridePendingTransition(R.anim.activity_fade_in, R.anim.activity_fade_out);
 		}
 	};
 	
