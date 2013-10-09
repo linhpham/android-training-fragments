@@ -1,9 +1,12 @@
 package jtribe.training.activity;
 
+import java.util.ArrayList;
+
 import jtribe.training.R;
 import jtribe.training.service.StockCollectorService;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,12 +18,15 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 @SuppressLint("NewApi")
 public class MainActivity extends Activity {
 	
 	private Button portfolioBtn;
+	private ImageView imageView;
+	private View mainActivityTextView;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -39,6 +45,8 @@ public class MainActivity extends Activity {
 			}
 		}
 		
+		imageView = (ImageView) findViewById(R.id.imageView2);
+		mainActivityTextView = (View) findViewById(R.id.mainActivityTextView);
 		portfolioBtn = (Button) findViewById(R.id.portfolioBtn);
 		portfolioBtn.setOnClickListener(loadStockListActivity);
 		
@@ -56,9 +64,18 @@ public class MainActivity extends Activity {
 		public void onClick(View v) {
 			float distance = portfolioBtn.getTop() - getWindow().getDecorView().getHeight();
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-				ObjectAnimator obj = ObjectAnimator.ofFloat(portfolioBtn, "y", distance);
-				obj.setDuration(700);
-				obj.addListener(new AnimatorListener() {
+				ArrayList<Animator> animators = new ArrayList<Animator>();
+				AnimatorSet set = new AnimatorSet();
+				
+				ObjectAnimator portfolioBtnAnimator = ObjectAnimator.ofFloat(portfolioBtn, "y", distance);
+				ObjectAnimator mainActivityTextViewAnimator = ObjectAnimator.ofFloat(mainActivityTextView, "y", distance);
+				ObjectAnimator imageViewAnimator = ObjectAnimator.ofFloat(imageView, "y", distance);
+				
+				animators.add(portfolioBtnAnimator);
+				animators.add(mainActivityTextViewAnimator);
+				animators.add(imageViewAnimator);
+				
+				set.addListener(new AnimatorListener() {
 					
 					@Override
 					public void onAnimationStart(Animator animation) {
@@ -78,7 +95,8 @@ public class MainActivity extends Activity {
 					}
 				});
 				
-				obj.start();
+				set.playSequentially(animators);
+				set.start();
 			} else {
 				startMainActivity();
 			}
