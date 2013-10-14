@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_loading_anim00" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim01" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim02" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim03" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim04" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim05" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim06" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim07" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim08" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim09" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim10" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim11" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim12" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim13" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim14" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim15" android:duration="200" />
+    <item android:drawable="@drawable/ic_loading_anim16" android:duration="200" />
+</animation-list>
