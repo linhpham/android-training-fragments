@@ -11,6 +11,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 
 public class GenerateNotification {
 	final int STOCK_NOTIFY_ID = 1;
@@ -22,25 +23,27 @@ public class GenerateNotification {
 		int icon = R.drawable.ic_stat_dollar;
 		CharSequence tickerText = "Latest stock price: $" + latestStockPrice;
 		long when = System.currentTimeMillis();
-
-		Notification notification = new Notification(icon, tickerText, when);
 		
-		CharSequence contentTitle = "Stock update";
-		CharSequence contentText = "Latest stock price: $" + latestStockPrice;
 		Intent notificationIntent = new Intent(context, MainActivity.class);
-		
+		//Take particular note of FLAG_UPDATE_CURRENT which tells our pending intent to refresh, and inturn load up our new stock value. Without it our MainActivity would only update once.
+		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		Bundle bun = new Bundle();
 		bun.putString("latestStockPrice", latestStockPrice);
 		notificationIntent.putExtras(bun);
 		
-		//Take particular note of FLAG_UPDATE_CURRENT which tells our pending intent to refresh, and inturn load up our new stock value. Without it our MainActivity would only update once.
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-		notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+		
+		NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(context);
+		notiBuilder.setTicker(tickerText);
+		notiBuilder.setContentTitle("Stock update");
+		notiBuilder.setContentText("Latest stock price: $" + latestStockPrice);
+		notiBuilder.setWhen(when);
+		notiBuilder.setSmallIcon(icon);
+		notiBuilder.setContentIntent(contentIntent);
+		
+		
+		Notification notification = notiBuilder.build();
 		setNotificationProperties(notification);
-		
 		mNotificationManager.notify(STOCK_NOTIFY_ID, notification);
-		
 		AppWidgetManager gm = AppWidgetManager.getInstance(context);
 		ComponentName widgetProvider = new ComponentName(context, WidgetProvider.class);
 		int[] appWidgetIds = gm.getAppWidgetIds(widgetProvider);
