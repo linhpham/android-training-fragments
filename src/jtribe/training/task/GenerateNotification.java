@@ -36,6 +36,9 @@ public class GenerateNotification {
 		notiBuilder.setTicker(tickerText);
 		notiBuilder.setContentTitle("Stock update");
 		notiBuilder.setContentText("Latest stock price: $" + latestStockPrice);
+		notiBuilder.setStyle(new NotificationCompat.BigTextStyle()
+			.bigText("Latest stock price: $" + latestStockPrice + " updated recently.")
+		);
 		notiBuilder.setWhen(when);
 		notiBuilder.setSmallIcon(icon);
 		notiBuilder.setContentIntent(contentIntent);
