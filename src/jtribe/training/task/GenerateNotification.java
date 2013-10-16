@@ -2,6 +2,7 @@ package jtribe.training.task;
 
 import jtribe.training.R;
 import jtribe.training.activity.MainActivity;
+import jtribe.training.service.StockCollectorService;
 import jtribe.training.service.WidgetProvider;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -31,6 +32,12 @@ public class GenerateNotification {
 		bun.putString("latestStockPrice", latestStockPrice);
 		notificationIntent.putExtras(bun);
 		
+		// big view of the notification.
+		Intent stopIntent = new Intent(context, StockCollectorService.class);
+		stopIntent.setAction("stop");
+		stopIntent.putExtra("notificationId", STOCK_NOTIFY_ID);
+		PendingIntent piStop = PendingIntent.getService(context, 0, stopIntent, 0);
+		
 		
 		NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(context);
 		notiBuilder.setTicker(tickerText);
@@ -39,6 +46,7 @@ public class GenerateNotification {
 		notiBuilder.setStyle(new NotificationCompat.BigTextStyle()
 			.bigText("Latest stock price: $" + latestStockPrice + " updated recently.")
 		);
+		notiBuilder.addAction(android.R.drawable.ic_delete, "stop", piStop);
 		notiBuilder.setWhen(when);
 		notiBuilder.setSmallIcon(icon);
 		notiBuilder.setContentIntent(contentIntent);
@@ -47,6 +55,7 @@ public class GenerateNotification {
 		Notification notification = notiBuilder.build();
 		setNotificationProperties(notification);
 		mNotificationManager.notify(STOCK_NOTIFY_ID, notification);
+		
 		AppWidgetManager gm = AppWidgetManager.getInstance(context);
 		ComponentName widgetProvider = new ComponentName(context, WidgetProvider.class);
 		int[] appWidgetIds = gm.getAppWidgetIds(widgetProvider);
