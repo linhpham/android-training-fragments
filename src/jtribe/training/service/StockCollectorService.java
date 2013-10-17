@@ -66,14 +66,7 @@ public class StockCollectorService extends Service {
 				String ns = Context.NOTIFICATION_SERVICE;
 			    NotificationManager nMgr = (NotificationManager) this.getSystemService(ns);
 			    nMgr.cancel(notificationId);
-				Thread thread = new Thread(new Runnable() {
-					@Override
-					public void run() {
-						// do stop service as can't do this in the service
-						stopSelf();
-					}
-				}, "StopServiceThread");
-				thread.start();
+			    stopSelf();
 			}
 		}
 		return super.onStartCommand(intent, flags, startId);
