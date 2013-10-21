@@ -1,10 +1,12 @@
 package jtribe.training.service;
 
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import jtribe.training.task.FetchStockPrice;
 import jtribe.training.task.GenerateNotification;
+import jtribe.training.utils.StockPriceStore;
 
 import android.app.NotificationManager;
 import android.app.Service;
@@ -19,7 +21,7 @@ public class StockCollectorService extends Service {
 
 	private static final String STOCK_PRICE = "stock_price";
 	protected static final String PREFS_NAME = "stock_prefs";
-	
+
 	protected static final boolean mSilentMode = false;
 	private Timer timer;
 
@@ -37,12 +39,19 @@ public class StockCollectorService extends Service {
 			Log.i(TAG, "Latest Stock Price: " + latestStockPrice);
 
 			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-			
+			StockPriceStore s = StockPriceStore.getInstance();
 			// if stock price is different to last known
-			if (!latestStockPrice.equalsIgnoreCase(settings.getString(STOCK_PRICE, ""))) {
+			if (!latestStockPrice.equalsIgnoreCase(settings.getString(
+					STOCK_PRICE, ""))) {
 				// notify
 				GenerateNotification gn = new GenerateNotification();
 				gn.createNotification(latestStockPrice, getApplicationContext());
+				
+				// keep track of changes in stock price
+				long timestamp = Calendar.getInstance().getTimeInMillis();
+				StockPriceStore.getInstance()
+						.set(String.valueOf(timestamp), latestStockPrice)
+						.save();
 				
 				SharedPreferences.Editor editor = settings.edit();
 				editor.putString(STOCK_PRICE, latestStockPrice);
