@@ -10,11 +10,17 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.util.Log;
 
 public class StockCollectorService extends Service {
 	private static final String TAG = "StockCollectorService";
+
+	private static final String STOCK_PRICE = "stock_price";
+	protected static final String PREFS_NAME = "stock_prefs";
+	
+	protected static final boolean mSilentMode = false;
 	private Timer timer;
 
 	private TimerTask updateTask = new TimerTask() {
@@ -30,8 +36,19 @@ public class StockCollectorService extends Service {
 			String latestStockPrice = fsp.getLatestStockPrice();
 			Log.i(TAG, "Latest Stock Price: " + latestStockPrice);
 
-			GenerateNotification gn = new GenerateNotification();
-			gn.createNotification(latestStockPrice, getApplicationContext());
+			SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+			
+			// if stock price is different to last known
+			if (!latestStockPrice.equalsIgnoreCase(settings.getString(STOCK_PRICE, ""))) {
+				// notify
+				GenerateNotification gn = new GenerateNotification();
+				gn.createNotification(latestStockPrice, getApplicationContext());
+				
+				SharedPreferences.Editor editor = settings.edit();
+				editor.putString(STOCK_PRICE, latestStockPrice);
+				// Commit the edits!
+				editor.commit();
+			}
 		}
 	};
 
@@ -64,9 +81,10 @@ public class StockCollectorService extends Service {
 			if ("stop".equals(intent.getAction())) {
 				int notificationId = intent.getIntExtra("notificationId", -1);
 				String ns = Context.NOTIFICATION_SERVICE;
-			    NotificationManager nMgr = (NotificationManager) this.getSystemService(ns);
-			    nMgr.cancel(notificationId);
-			    stopSelf();
+				NotificationManager nMgr = (NotificationManager) this
+						.getSystemService(ns);
+				nMgr.cancel(notificationId);
+				stopSelf();
 			}
 		}
 		return super.onStartCommand(intent, flags, startId);
